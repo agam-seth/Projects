@@ -1,0 +1,55 @@
+{% extends 'posts/posts_base.html' %}
+
+{% block pre_post %}
+
+  <div class="col-mid-4">
+    {% if user.is_authenticated %}
+      <div class="card card-with-shadow">
+        <div class="container">
+          <h3 class="title">
+            <div style="color: black">
+              {{user.username}}'s Groups : {{user_groups.count}}
+            </div>
+            <br>
+            <ul class="list-unstyled">
+              {% for member_group in user_groups %}
+                <li class='group li-with-bullet'>
+                    <a class="list-group-item" href="{% url 'groups:single_group' slug=member_group.slug %}">{{member_group.name}}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </h3>
+        </div>
+      </div>
+    {% endif %}
+
+    <br><hr><br>
+
+    <div class="card card-with-shadow">
+  		<div class="content">
+  			<h3 class="title">
+          <div style="color: black">
+            Other Groups: {{other_groups.count}}
+          </div>
+          <br>
+    			<ul class="list-unstyled">
+    				{% for member_group in other_groups %}
+    					<li class="group li-with-bullet">
+                <a class="list-group-item" href="{% url 'groups:single_group' slug=member_group.slug %}">{{ member_group.name }}</a>
+              </li>
+    				{% endfor %}
+    			</ul>
+        </h3>
+  		</div>
+	 </div>
+  </div>
+
+{% endblock %}
+
+{% block post_content %}
+  <div class="col-md-8">
+  	{% for posts in post_list %}
+      {% include "posts/_post.html" %}
+  	{% endfor %}
+  </div>
+{% endblock %}
